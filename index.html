@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Adinda's TCG Artwork Binder</title>
   <!-- Defer script eksternal agar render awal halaman instan & tidak terblokir -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -33,8 +33,11 @@
       user-select: text;
     }
 
+    html { max-width: 100%; overflow-x: hidden; -webkit-text-size-adjust: 100%; }
+
     body {
       margin: 0;
+      max-width: 100%;
       min-height: 100vh;
       font-family: 'Quicksand', sans-serif;
       color: var(--text-main);
@@ -200,7 +203,7 @@
     .binder-body {
       position: relative;
       display: grid;
-      grid-template-columns: 1fr 56px 1.28fr;
+      grid-template-columns: minmax(0, 1fr) 56px minmax(0, 1fr);
       min-height: 640px;
       background: linear-gradient(145deg, #f8d3de 0%, var(--pink-leather) 48%, var(--pink-leather-dark) 100%);
       border-radius: 24px;
@@ -222,173 +225,26 @@
       opacity: 0.85;
     }
 
-    /* ================= PANEL KIRI (SAKU KARTU + STIKER KAWAII) ================= */
-    .left-cover {
+    /* ================= DUA SISI HALAMAN (KIRI: COMMISSION / KANAN: MY ARTWORK) ================= */
+    .side-area {
       position: relative;
-      padding: 16px 18px 18px 20px;
+      padding: 10px 12px 10px 18px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      border-right: 1.5px solid rgba(206, 141, 161, 0.35);
+      min-width: 0;
     }
 
-    .pen-loop {
-      position: absolute;
-      left: -22px;
-      top: 48px;
-      width: 24px;
-      height: 44px;
-      background: linear-gradient(180deg, #f4c4d2, #dfa4b6);
-      border-radius: 8px 0 0 8px;
-      border: 1.5px solid #d48ea4;
-      border-right: none;
-      box-shadow: -3px 4px 8px rgba(150, 92, 110, 0.2);
-    }
+    .left-sleeve-area { padding: 10px 18px 10px 12px; }
 
-    .left-header-note {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 11.5px;
-      font-weight: 700;
-      color: #9e6577;
-      margin-bottom: 8px;
-      z-index: 2;
+    .sleeve-sheet.left-page {
+      border-radius: 18px 6px 6px 18px;
+      padding: 14px 24px 14px 14px;
     }
+    .sleeve-sheet.left-page .sleeve-holes { left: auto; right: 6px; }
+    .sleeve-sheet.left-page::after { inset: 10px 20px 10px 10px; }
 
-    .pocket-stack {
-      position: relative;
-      background: linear-gradient(180deg, rgba(242, 192, 207, 0.55), rgba(235, 178, 196, 0.85));
-      border: 1.5px solid #df9fb2;
-      border-radius: 16px;
-      padding: 14px 12px 16px;
-      box-shadow:
-        inset 0 3px 8px rgba(173, 106, 127, 0.2),
-        0 4px 10px rgba(185, 118, 138, 0.15);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      z-index: 2;
-    }
-
-    .pocket-tier {
-      position: relative;
-      height: 82px;
-      background: linear-gradient(180deg, #f6cad7 0%, #eeb5c6 100%);
-      border-top: 2px dashed var(--pink-stitch);
-      border-radius: 10px 10px 14px 14px;
-      box-shadow: 0 -4px 10px rgba(175, 108, 128, 0.18);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px;
-      cursor: pointer;
-      transition: transform 0.18s ease;
-    }
-
-    .pocket-tier:hover {
-      transform: translateY(-2px);
-    }
-
-    .mini-holo-card {
-      width: 92%;
-      height: 68px;
-      border-radius: 10px;
-      overflow: hidden;
-      position: relative;
-      border: 1.5px solid rgba(255, 255, 255, 0.85);
-      box-shadow: 0 3px 8px rgba(140, 80, 100, 0.22);
-      background: linear-gradient(125deg, #ffe6f0, #e4d7ff, #d4f1ff, #ffd9e8);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 6px 10px;
-    }
-
-    .mini-holo-card img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .mini-holo-sheen {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.65) 45%, rgba(255,192,225,0.35) 55%, transparent 80%);
-      pointer-events: none;
-    }
-
-    .mini-badge {
-      position: relative;
-      z-index: 2;
-      background: rgba(255, 255, 255, 0.9);
-      color: #8f4f66;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 999px;
-      border: 1px solid #eab7c8;
-      max-width: 145px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .mini-actions {
-      position: relative;
-      z-index: 3;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .mini-remove-btn {
-      background: rgba(255, 240, 244, 0.94);
-      color: #b84460;
-      border: 1px solid #e69eb2;
-      border-radius: 999px;
-      width: 22px;
-      height: 22px;
-      font-size: 11px;
-      font-weight: 700;
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      padding: 0;
-      line-height: 1;
-      transition: transform 0.15s ease, background-color 0.15s ease;
-    }
-
-    .mini-remove-btn:hover {
-      background: #d95b79;
-      color: #fff;
-      border-color: #c24664;
-      transform: scale(1.1);
-    }
-
-    /* Area Dekorasi Stiker Coquette */
-    .sticker-canvas {
-      position: relative;
-      height: 185px;
-      margin-top: 10px;
-      border-radius: 14px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-around;
-      padding: 8px;
-    }
-
-    .sticker {
-      filter: drop-shadow(0 3px 5px rgba(155, 92, 112, 0.25));
-      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
-      cursor: pointer;
-    }
-
-    .sticker:hover {
-      transform: scale(1.12) rotate(-4deg);
-    }
+    .contact-row { display: flex; justify-content: center; gap: 14px; margin-top: 10px; }
+    .contact-row img { width: 36px; height: 36px; object-fit: contain; }
 
     /* ================= SPINE TENGAH: 6-RING METAL & PITA SATIN PINK ================= */
     .spine-center {
@@ -865,24 +721,6 @@
       margin-top: 12px;
     }
 
-    .modal-card.fullscreen-notes {
-      max-width: 100vw;
-      width: 100vw;
-      height: 100vh;
-      max-height: 100vh;
-      border-radius: 0;
-      border: none;
-      padding: 18px 24px;
-    }
-
-    .modal-card.fullscreen-notes .inspector-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .modal-card.fullscreen-notes .inspector-left-col {
-      display: none;
-    }
-
     @keyframes popIn {
       from { transform: scale(0.96); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
@@ -1083,24 +921,21 @@
       flex: 1;
       min-height: 280px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
       overflow: hidden;
     }
 
-    .md-workspace.mode-edit { grid-template-columns: 1fr; }
+    .md-workspace { grid-template-columns: 1fr; }
     .md-workspace.mode-edit .md-preview-pane { display: none; }
-    .md-workspace.mode-preview { grid-template-columns: 1fr; }
     .md-workspace.mode-preview .md-editor-pane { display: none; }
+    .md-studio-bar.is-preview .md-format-tools { display: none; }
 
     .md-editor-pane {
       display: flex;
       flex-direction: column;
       overflow-y: auto;
-      border-right: 1.5px dashed #f0ccd7;
       background: #fffcfd;
     }
 
-    .md-workspace.mode-edit .md-editor-pane { border-right: none; }
 
     .md-textarea {
       width: 100%;
@@ -1245,15 +1080,94 @@
       opacity: 1;
     }
 
+
+    .inspect-card-frame { cursor: zoom-in; }
+    .zoom-hint {
+      position: absolute; right: 8px; bottom: 8px; z-index: 6;
+      background: rgba(255, 248, 250, 0.92); color: #8f4f66;
+      border: 1px solid #eab7c8; border-radius: 999px;
+      font-size: 11px; font-weight: 700; padding: 3px 9px;
+      pointer-events: none; box-shadow: 0 2px 6px rgba(150, 88, 108, 0.2);
+    }
+
+    /* ================= PENANDA HALAMAN (TAB) KIRI & KANAN ================= */
+    .page-tab {
+      position: absolute;
+      top: 34px;
+      z-index: 6;
+      width: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 0 12px;
+      background: linear-gradient(180deg, #fffafb 0%, #fbdce6 100%);
+      border: 1.5px solid #e2a6ba;
+      color: #8f4f66;
+      font-weight: 800;
+      font-size: 12.5px;
+      box-shadow: 0 4px 10px rgba(150, 88, 108, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .page-tab.tab-left { left: -14px; border-radius: 12px 0 0 12px; border-right: none; }
+    .page-tab.tab-right { right: -14px; border-radius: 0 12px 12px 0; border-left: none; }
+
+    .tab-label {
+      writing-mode: vertical-rl;
+      white-space: nowrap;
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+    .tab-left .tab-label { transform: rotate(180deg); }
+
+    .tab-add {
+      width: 22px;
+      height: 22px;
+      padding: 0;
+      border: none;
+      border-radius: 50%;
+      background: #e58aa6;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 22px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(170, 90, 115, 0.35);
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .tab-add:hover { transform: scale(1.12); background: #d9708f; }
+
+    .tab-count {
+      font-size: 10px;
+      font-weight: 700;
+      color: #b0788a;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 999px;
+      min-width: 18px;
+      text-align: center;
+      padding: 1px 4px;
+    }
+
     /* ================= RESPONSIVE MOBILE ================= */
     @media (max-width: 840px) {
+      .page-tab {
+        position: static;
+        width: auto;
+        flex-direction: row;
+        gap: 8px;
+        padding: 6px 12px;
+        margin-bottom: -2px;
+        border-radius: 12px 12px 0 0 !important;
+        border: 1.5px solid #e2a6ba;
+        border-bottom: none;
+      }
+      .tab-label { writing-mode: horizontal-tb; }
+      .tab-left .tab-label { transform: none; }
+      .page-tab.tab-left { align-self: flex-start; margin-left: 12px; }
+      .page-tab.tab-right { align-self: flex-end; margin-right: 12px; }
       .binder-body {
         grid-template-columns: 1fr;
         gap: 18px;
-      }
-      .left-cover {
-        border-right: none;
-        border-bottom: 1.5px dashed var(--pink-stitch);
       }
       .spine-center {
         flex-direction: row;
@@ -1295,6 +1209,66 @@
         border-bottom: 1.5px dashed #f0ccd7;
       }
     }
+
+    @media (max-width: 600px) {
+      body { padding: 8px 8px 28px; }
+
+      .toolbar { padding: 10px 12px; border-radius: 16px; margin-bottom: 12px; }
+      .brand-title { font-size: 14px; }
+      .tool-group { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+      .tool-group .btn, .tool-group .compress-pill { justify-content: center; font-size: 12px; padding: 8px 8px; min-width: 0; }
+      .tool-group .btn-primary { grid-column: 1 / -1; }
+      .tool-group .compress-pill { grid-column: 1 / -1; }
+      .tool-group #clearBinderBtn { grid-column: auto; }
+
+      .binder-stage { padding: 8px; border-radius: 22px; }
+      .lace-border { inset: 3px; border-radius: 19px; }
+      .binder-body { padding: 10px; border-radius: 16px; gap: 10px; min-height: 0; }
+      .binder-body::before { inset: 5px; border-radius: 12px; }
+      .spine-center { height: 38px; padding: 8px 14px; }
+      .ring-group { gap: 14px; }
+      .binder-ring { height: 28px; }
+      .satin-bow-wrapper { display: none; }
+
+      .side-area, .left-sleeve-area { padding: 0; }
+      .sleeve-sheet.left-page { padding: 10px 20px 10px 10px; border-radius: 14px 6px 6px 14px; }
+      .sleeve-sheet.left-page .sleeve-holes { right: 4px; }
+      .sleeve-sheet { padding: 10px 10px 10px 20px; gap: 8px; border-radius: 6px 14px 14px 6px; }
+      .sleeve-holes { left: 4px; }
+      .card-pocket { max-height: none; }
+      .category-badge-pill { font-size: 8.5px; padding: 1px 6px; max-width: 80%; top: 5px; right: 5px; }
+      .note-indicator-pill { top: 5px; left: 5px; }
+      .card-caption-tag { opacity: 1; transform: none; bottom: 5px; left: 5px; right: 5px; padding: 3px 6px; }
+      .card-caption-excerpt { display: none; }
+
+      .page-controls { flex-wrap: wrap; border-radius: 18px; justify-content: center; }
+      .page-controls > .btn { flex: 1; justify-content: center; }
+      .page-controls > div:last-child { width: 100%; }
+      .page-controls > div:last-child .btn { flex: 1; justify-content: center; }
+      .page-indicator { order: -1; width: 100%; text-align: center; }
+
+      .modal-backdrop { padding: 0; align-items: stretch; }
+      .modal-card, .modal-card.guide-modal {
+        max-width: 100%; width: 100%; height: 100%; max-height: 100%;
+        border-radius: 0; border: none; padding: 12px 12px calc(12px + env(safe-area-inset-bottom, 0px));
+      }
+      .modal-card[style] { max-width: 100% !important; height: auto; max-height: 92%; align-self: center; border-radius: 20px; }
+      .modal-header h3 { font-size: 14px; }
+      .inspector-grid { gap: 14px; overflow-y: auto; display: block; -webkit-overflow-scrolling: touch; }
+      .inspector-left-col { overflow: visible; padding-right: 0; margin-bottom: 14px; }
+      .inspect-card-frame { width: min(60vw, 210px); }
+      .inspector-right-col { min-height: 420px; }
+      .md-textarea { font-size: 16px; min-height: 320px; }
+      .md-preview-pane { min-height: 320px; }
+      .md-studio-bar { padding: 8px; }
+      .md-format-tools { width: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 2px; }
+      .md-fmt-btn { flex-shrink: 0; padding: 6px 9px; }
+      .md-status-footer span:first-child { display: none; }
+      .modal-actions .btn { flex: 1; justify-content: center; padding: 10px; }
+      .toast { left: 12px; right: 12px; bottom: 14px; max-width: none; text-align: center; }
+      .markdown-preview table { display: block; overflow-x: auto; }
+      .form-input, .form-select { font-size: 16px; }
+    }
   </style>
 </head>
 <body>
@@ -1317,7 +1291,6 @@
 
       <button class="btn" id="siteGuideBtn" title="Buka panduan penggunaan" aria-label="Panduan penggunaan">ⓘ Panduan</button>
       <button class="btn" id="compressSettingsBtn" title="Atur kualitas kompresi">⚙️ Kualitas</button>
-      <button class="btn btn-primary" id="addImagesBtn">➕ Tambah Gambar</button>
       <button class="btn" id="importZipBtn">📥 Import ZIP</button>
       <button class="btn" id="exportZipBtn">📦 Export / Backup ZIP</button>
       <button class="btn btn-danger" id="clearBinderBtn" title="Kosongkan semua kartu">🗑️</button>
@@ -1327,7 +1300,6 @@
   <!-- Hidden File Inputs -->
   <input type="file" id="multiImageInput" accept="image/*" multiple hidden />
   <input type="file" id="singleSlotInput" accept="image/*" hidden />
-  <input type="file" id="leftPocketInput" accept="image/*" hidden />
   <input type="file" id="zipFileInput" accept=".zip,application/zip" hidden />
 
   <!-- BINDER STAGE DENGAN RENDA PUTIH -->
@@ -1335,42 +1307,22 @@
     <div class="lace-border"></div>
 
     <div class="binder-body">
-      <!-- PANEL KIRI: SAKU KARTU + DEKORASI STIKER -->
-      <section class="left-cover">
-        <div class="pen-loop"></div>
-
-        <div>
-          <div class="left-header-note">
-            <span>✨ Saku Favorit (Klik ganti / ✕ hapus)</span>
-            <span style="font-size:10px;">A5 6-Ring</span>
-          </div>
-
-          <div class="pocket-stack" id="leftPocketStack"></div>
+      <!-- HALAMAN KIRI: COMMISSION / OTHER ARTIST ARTWORK -->
+      <section class="side-area left-sleeve-area">
+        <div class="page-tab tab-left">
+          <button type="button" class="tab-add add-side-btn" data-side="left" title="Tambah gambar ke Commission Artwork" aria-label="Tambah gambar ke Commission Artwork">+</button>
+          <span class="tab-label">Commission Artwork</span>
+          <small class="tab-count" id="countLeft" title="Jumlah artwork">0</small>
         </div>
-
-        <!-- Stiker Coquette SVG -->
-        <div class="sticker-canvas" title="Dekorasi Pin Sosial Media">
-          <a href="mailto:adindlyazzahra@gmail.com" target="_blank" rel="noopener noreferrer">
-            <img src="gmail.png" alt="Gmail" width="50" height="50">
-          </a>
-
-          <a href="https://instagram.com/adindlyazzahra" target="_blank" rel="noopener noreferrer">
-            <img src="instagram.png" alt="Instagram" width="50" height="50">
-          </a>
-
-          <svg class="sticker" width="76" height="76" viewBox="0 0 100 100">
-            <circle cx="50" cy="54" r="42" fill="#fff"/>
-            <ellipse cx="38" cy="28" rx="7" ry="18" transform="rotate(-12 38 28)" fill="#fff5f8" stroke="#b9788b" stroke-width="2.5"/>
-            <ellipse cx="62" cy="28" rx="7" ry="18" transform="rotate(12 62 28)" fill="#fff5f8" stroke="#b9788b" stroke-width="2.5"/>
-            <ellipse cx="38" cy="29" rx="3.5" ry="11" transform="rotate(-12 38 29)" fill="#f6bfd0"/>
-            <ellipse cx="62" cy="29" rx="3.5" ry="11" transform="rotate(12 62 29)" fill="#f6bfd0"/>
-            <circle cx="50" cy="58" r="24" fill="#fff5f8" stroke="#b9788b" stroke-width="2.5"/>
-            <circle cx="42" cy="55" r="2.5" fill="#7c4757"/>
-            <circle cx="58" cy="55" r="2.5" fill="#7c4757"/>
-            <circle cx="37" cy="61" r="4" fill="#f7b4c8" opacity="0.7"/>
-            <circle cx="63" cy="61" r="4" fill="#f7b4c8" opacity="0.7"/>
-            <path d="M47 61 Q50 64 53 61" fill="none" stroke="#7c4757" stroke-width="2" stroke-linecap="round"/>
-          </svg>
+        <div class="sleeve-sheet left-page" id="sleeveSheetLeft">
+          <div class="sleeve-holes">
+            <div class="sleeve-hole"></div>
+            <div class="sleeve-hole"></div>
+            <div class="sleeve-hole"></div>
+            <div class="sleeve-hole"></div>
+            <div class="sleeve-hole"></div>
+            <div class="sleeve-hole"></div>
+          </div>
         </div>
       </section>
 
@@ -1417,9 +1369,14 @@
         </div>
       </div>
 
-      <!-- PANEL KANAN: SLEEVE BENING 4-SLOT (2x2) -->
-      <section class="right-sleeve-area">
-        <div class="sleeve-sheet" id="sleeveSheet">
+      <!-- HALAMAN KANAN: MY ARTWORK -->
+      <section class="side-area right-sleeve-area">
+        <div class="page-tab tab-right">
+          <button type="button" class="tab-add add-side-btn" data-side="right" title="Tambah gambar ke My Artwork" aria-label="Tambah gambar ke My Artwork">+</button>
+          <span class="tab-label">My Artwork</span>
+          <small class="tab-count" id="countRight" title="Jumlah artwork">0</small>
+        </div>
+        <div class="sleeve-sheet" id="sleeveSheetRight">
           <div class="sleeve-holes">
             <div class="sleeve-hole"></div>
             <div class="sleeve-hole"></div>
@@ -1429,16 +1386,21 @@
             <div class="sleeve-hole"></div>
           </div>
         </div>
-
-        <div class="page-controls">
-          <button class="btn" id="prevPageBtn">◀ Sebelumnya</button>
-          <div class="page-indicator" id="pageIndicator">Halaman 1 / 1</div>
-          <div style="display:flex; gap:6px;">
-            <button class="btn" id="addPageBtn" title="Tambah halaman sleeve baru">➕ Halaman</button>
-            <button class="btn" id="nextPageBtn">Berikutnya ▶</button>
-          </div>
-        </div>
       </section>
+    </div>
+
+    <div class="page-controls">
+      <button class="btn" id="prevPageBtn">◀ Sebelumnya</button>
+      <div class="page-indicator" id="pageIndicator">Halaman 1 / 1</div>
+      <div style="display:flex; gap:6px;">
+        <button class="btn" id="addPageBtn" title="Tambah halaman baru di kedua sisi">➕ Halaman</button>
+        <button class="btn" id="nextPageBtn">Berikutnya ▶</button>
+      </div>
+    </div>
+
+    <div class="contact-row">
+      <a href="mailto:adindlyazzahra@gmail.com" target="_blank" rel="noopener noreferrer"><img src="gmail.png" alt="Gmail"></a>
+      <a href="https://instagram.com/adindlyazzahra" target="_blank" rel="noopener noreferrer"><img src="instagram.png" alt="Instagram"></a>
     </div>
   </main>
 
@@ -1448,7 +1410,6 @@
       <div class="modal-header">
         <h3>✨ Detail Kartu, Kategori & Catatan Artwork</h3>
         <div style="display:flex; gap:6px; align-items:center;">
-          <button class="btn btn-sm" id="toggleFullscreenNotesBtn" title="Perluas ruang catatan ke layar penuh">⛶ Layar Penuh</button>
           <button class="btn btn-sm" id="closeCardModalBtn">✕</button>
         </div>
       </div>
@@ -1463,7 +1424,11 @@
               <div class="category-badge-pill" id="inspectCatBadge" style="display:none;"></div>
               <div class="dynamic-foil-spot"></div>
               <div class="plastic-glare"></div>
+              <div class="zoom-hint">🗗 Buka penuh</div>
             </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:12px;">
+            <button type="button" class="btn btn-sm btn-primary" id="openWindowBtn" style="width:100%; justify-content:center;">🗗 Buka Artwork Penuh di Jendela Baru</button>
           </div>
 
           <div class="form-row">
@@ -1511,11 +1476,10 @@
 
         <!-- Kolom Kanan: Workspace Markdown Luas & Unlimited -->
         <div class="inspector-right-col">
-          <div class="md-studio-bar">
+          <div class="md-studio-bar is-preview" id="mdStudioBar">
             <div class="md-tabs" id="mdViewTabs">
-              <button type="button" class="md-tab-btn active" data-mode="split">◫ Split</button>
-              <button type="button" class="md-tab-btn" data-mode="edit">✏️ Tulis</button>
-              <button type="button" class="md-tab-btn" data-mode="preview">👁️ Preview</button>
+              <button type="button" class="md-tab-btn active" data-mode="preview">👁️ Preview</button>
+              <button type="button" class="md-tab-btn" data-mode="edit">✏️ Edit</button>
             </div>
 
             <div class="md-format-tools" title="Sisipkan format Markdown">
@@ -1530,7 +1494,7 @@
             </div>
           </div>
 
-          <div class="md-workspace mode-split" id="mdWorkspace">
+          <div class="md-workspace mode-preview" id="mdWorkspace">
             <div class="md-editor-pane">
               <textarea
                 class="md-textarea"
@@ -1576,14 +1540,14 @@ Contoh:
 
         <h4>🖼️ Menambahkan Artwork</h4>
         <ul>
-          <li>Klik <b>➕ Tambah Gambar</b> untuk memilih satu atau beberapa gambar dari perangkat.</li>
+          <li>Klik tombol <b>+</b> di penanda halaman kiri (Commission Artwork) atau kanan (My Artwork) untuk memilih satu atau beberapa gambar dari perangkat.</li>
           <li>Klik slot kosong pada sleeve untuk mengisi slot tersebut dengan gambar.</li>
           <li>Gunakan tombol panah <b>Sebelumnya</b> dan <b>Berikutnya</b> untuk berpindah halaman.</li>
-          <li>Klik <b>+ Halaman</b> untuk menambahkan sleeve baru.</li>
+          <li>Klik <b>+ Halaman</b> untuk menambahkan sleeve baru di kedua sisi sekaligus.</li>
         </ul>
 
-        <h4>✨ Saku Favorit</h4>
-        <p>Klik salah satu saku di sisi kiri untuk mengganti gambarnya. Gunakan tombol <b>✕</b> pada saku untuk menghapus gambar dari saku favorit.</p>
+        <h4>📖 Dua Sisi Binder</h4>
+        <p>Halaman kanan berisi <b>My Artwork</b>, halaman kiri berisi <b>Commission Artwork</b>. Tombol <b>+</b> ada di penanda halaman (tab) di tepi masing-masing sisi. Kedua sisi berpindah halaman bersamaan. Tarik kartu (drag) untuk menukar posisinya, termasuk antar sisi.</p>
 
         <h4>📝 Detail dan Catatan Artwork</h4>
         <p>Klik kartu yang sudah terisi untuk membuka detailnya. Di sana kamu dapat mengubah judul, kategori, efek holografik, serta menulis catatan menggunakan Markdown. Perubahan disimpan melalui tombol simpan.</p>
@@ -1779,18 +1743,12 @@ Contoh:
       ]];
     }
 
-    const DEFAULT_LEFT_POCKETS = [
-      { label: 'Warna', blob: null },
-      { label: 'Pokemon', blob: null },
-      { label: 'Kudapan', blob: null }
-    ];
-
     /* ==========================================================================
        4. STATE & PENYIMPANAN INDEXEDDB (DEBOUNCED BLOB STORAGE)
        ========================================================================== */
     let state = {
       pages: createDefaultPages(),
-      leftPockets: JSON.parse(JSON.stringify(DEFAULT_LEFT_POCKETS)),
+      leftPages: [[null, null, null, null]],
       categories: JSON.parse(JSON.stringify(DEFAULT_CATEGORIES)),
       currentPage: 0,
       settings: {
@@ -1898,13 +1856,16 @@ Contoh:
           }
         });
       });
-      state.leftPockets.forEach(p => {
-        if (p && (p.blob || p.dataUrl)) {
-          totalBytes += p.blob ? p.blob.size : Math.round((p.dataUrl.length * 3) / 4);
-        }
+      state.leftPages.forEach(page => {
+        page.forEach(slot => {
+          if (slot && (slot.blob || slot.dataUrl)) {
+            totalCards++;
+            totalBytes += slot.blob ? slot.blob.size : Math.round((slot.dataUrl.length * 3) / 4);
+          }
+        });
       });
       document.getElementById('storageStats').textContent =
-        `${totalCards} Kartu • ${state.pages.length} Halaman • ~${formatBytes(totalBytes)}`;
+        `${totalCards} Artwork • ${state.pages.length} Halaman • ~${formatBytes(totalBytes)}`;
     }
 
     function formatBytes(bytes) {
@@ -2022,98 +1983,50 @@ Contoh:
     /* ==========================================================================
        7. RENDER UI BINDER (BATCHED FRAGMENT + LABEL KATEGORI POJOK KANAN ATAS)
        ========================================================================== */
-    let targetSlotIndex = null;
-    let targetLeftPocketIndex = null;
-    let inspectingSlotIndex = null;
-    let draggedSlotIndex = null;
+    const SIDE_KEY = { right: 'pages', left: 'leftPages' };
+    function sidePages(side) { return state[SIDE_KEY[side]]; }
+    function emptyRow() { return [null, null, null, null]; }
 
-    function renderLeftPockets() {
-      const container = document.getElementById('leftPocketStack');
-      const frag = document.createDocumentFragment();
-
-      state.leftPockets.forEach((pocket, idx) => {
-        const imgSrc = getImageSrc(pocket);
-        const tier = document.createElement('div');
-        tier.className = 'pocket-tier';
-        tier.title = imgSrc
-          ? 'Klik untuk ganti gambar, atau klik ✕ untuk menghapus'
-          : 'Klik untuk pasang kartu mini di saku favorit';
-
-        const card = document.createElement('div');
-        card.className = 'mini-holo-card';
-
-        if (imgSrc) {
-          const img = document.createElement('img');
-          img.src = imgSrc;
-          img.decoding = 'async';
-          card.appendChild(img);
-        }
-
-        const badgeLeft = document.createElement('span');
-        badgeLeft.className = 'mini-badge';
-        badgeLeft.textContent = pocket.label || DEFAULT_LEFT_POCKETS[idx].label;
-
-        const actionsWrap = document.createElement('div');
-        actionsWrap.className = 'mini-actions';
-
-        const badgeRight = document.createElement('span');
-        badgeRight.className = 'mini-badge';
-        badgeRight.textContent = imgSrc ? '🖼️ Ganti' : '+ Isi';
-        actionsWrap.appendChild(badgeRight);
-
-        if (imgSrc) {
-          const removeBtn = document.createElement('button');
-          removeBtn.type = 'button';
-          removeBtn.className = 'mini-remove-btn';
-          removeBtn.textContent = '✕';
-          removeBtn.title = 'Hapus gambar dari saku ini';
-          removeBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            state.leftPockets[idx] = {
-              label: DEFAULT_LEFT_POCKETS[idx].label,
-              blob: null
-            };
-            saveStateToDB();
-            renderLeftPockets();
-            showToast('🗑️ Gambar saku favorit dihapus');
-          });
-          actionsWrap.appendChild(removeBtn);
-        }
-
-        const sheen = document.createElement('div');
-        sheen.className = 'mini-holo-sheen';
-
-        card.appendChild(badgeLeft);
-        card.appendChild(actionsWrap);
-        card.appendChild(sheen);
-        tier.appendChild(card);
-
-        tier.addEventListener('click', () => {
-          targetLeftPocketIndex = idx;
-          document.getElementById('leftPocketInput').click();
-        });
-
-        frag.appendChild(tier);
-      });
-
-      container.replaceChildren(frag);
+    function ensurePage(idx) {
+      while (state.pages.length <= idx) state.pages.push(emptyRow());
+      while (state.leftPages.length < state.pages.length) state.leftPages.push(emptyRow());
     }
 
-    function renderCurrentPage(animate = false) {
-      const sheet = document.getElementById('sleeveSheet');
-      if (animate) {
-        sheet.classList.add('flipping');
-        requestAnimationFrame(() => {
-          setTimeout(() => sheet.classList.remove('flipping'), 150);
-        });
+    function normalizeState() {
+      if (!Array.isArray(state.leftPages)) state.leftPages = [];
+      // Migrasi: gambar "Saku Favorit" versi lama dipindah ke halaman kiri
+      if (Array.isArray(state.leftPockets)) {
+        const filled = state.leftPockets.filter(p => p && (p.blob || p.dataUrl));
+        if (filled.length) {
+          if (!state.leftPages.length) state.leftPages.push(emptyRow());
+          filled.slice(0, 4).forEach((p, i) => {
+            if (!state.leftPages[0][i]) {
+              state.leftPages[0][i] = {
+                id: 'card_mig_' + Date.now() + '_' + i,
+                title: p.label || 'Commission',
+                categoryId: '', holo: 'none', notes: '',
+                blob: p.blob || dataUrlToBlob(p.dataUrl)
+              };
+            }
+          });
+        }
+        delete state.leftPockets;
       }
+      const total = Math.max(state.pages.length, state.leftPages.length, 1);
+      while (state.pages.length < total) state.pages.push(emptyRow());
+      while (state.leftPages.length < total) state.leftPages.push(emptyRow());
+    }
 
-      if (state.pages.length === 0) {
-        state.pages.push([null, null, null, null]);
-      }
-      state.currentPage = Math.max(0, Math.min(state.currentPage, state.pages.length - 1));
+    let targetSlotIndex = null;
+    let targetSide = 'right';
+    let multiTargetSide = 'right';
+    let inspectingSlotIndex = null;
+    let inspectingSide = 'right';
+    let dragged = null;
 
-      const currentSlots = state.pages[state.currentPage];
+    function renderSide(side) {
+      const sheet = document.getElementById(side === 'right' ? 'sleeveSheetRight' : 'sleeveSheetLeft');
+      const currentSlots = sidePages(side)[state.currentPage];
       const holesEl = sheet.querySelector('.sleeve-holes');
       const frag = document.createDocumentFragment();
       if (holesEl) frag.appendChild(holesEl);
@@ -2141,7 +2054,6 @@ Contoh:
             pocket.appendChild(holo);
           }
 
-          // LABEL KATEGORI DI POJOK KANAN ATAS SLEEVE
           const catObj = getCategoryById(item.categoryId);
           if (catObj) {
             const catPill = document.createElement('div');
@@ -2153,7 +2065,6 @@ Contoh:
             pocket.appendChild(catPill);
           }
 
-          // INDIKATOR CATATAN MARKDOWN DI POJOK KIRI ATAS
           if (item.notes && item.notes.trim().length > 0) {
             const notePill = document.createElement('div');
             notePill.className = 'note-indicator-pill';
@@ -2178,12 +2089,13 @@ Contoh:
           }
           pocket.appendChild(tag);
 
-          pocket.addEventListener('click', () => openCardInspectModal(i));
+          pocket.addEventListener('click', () => openCardInspectModal(side, i));
 
           pocket.addEventListener('dragstart', (e) => {
-            draggedSlotIndex = i;
+            dragged = { side, index: i };
             e.dataTransfer.effectAllowed = 'move';
           });
+          pocket.addEventListener('dragend', () => { dragged = null; });
         } else {
           const empty = document.createElement('div');
           empty.className = 'empty-slot-ui';
@@ -2191,6 +2103,7 @@ Contoh:
           pocket.appendChild(empty);
 
           pocket.addEventListener('click', () => {
+            targetSide = side;
             targetSlotIndex = i;
             document.getElementById('singleSlotInput').click();
           });
@@ -2212,16 +2125,17 @@ Contoh:
           if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
             const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
             if (files.length > 0) {
-              await insertImageFiles(files, state.currentPage, i);
+              await insertImageFiles(files, state.currentPage, i, side);
             }
             return;
           }
 
-          if (draggedSlotIndex !== null && draggedSlotIndex !== i) {
+          if (dragged && !(dragged.side === side && dragged.index === i)) {
+            const srcSlots = sidePages(dragged.side)[state.currentPage];
             const temp = currentSlots[i];
-            currentSlots[i] = currentSlots[draggedSlotIndex];
-            currentSlots[draggedSlotIndex] = temp;
-            draggedSlotIndex = null;
+            currentSlots[i] = srcSlots[dragged.index];
+            srcSlots[dragged.index] = temp;
+            dragged = null;
             saveStateToDB();
             renderCurrentPage();
             showToast('✨ Posisi kartu ditukar');
@@ -2236,6 +2150,32 @@ Contoh:
       }
 
       sheet.replaceChildren(frag);
+    }
+
+    function countSide(side) {
+      let n = 0;
+      sidePages(side).forEach(page => page.forEach(slot => { if (slot) n++; }));
+      return n;
+    }
+
+    function renderCurrentPage(animate = false) {
+      ensurePage(0);
+      state.currentPage = Math.max(0, Math.min(state.currentPage, state.pages.length - 1));
+      ensurePage(state.currentPage);
+
+      const sheets = [document.getElementById('sleeveSheetLeft'), document.getElementById('sleeveSheetRight')];
+      if (animate) {
+        sheets.forEach(sh => sh.classList.add('flipping'));
+        requestAnimationFrame(() => {
+          setTimeout(() => sheets.forEach(sh => sh.classList.remove('flipping')), 150);
+        });
+      }
+
+      renderSide('left');
+      renderSide('right');
+
+      document.getElementById('countLeft').textContent = countSide('left');
+      document.getElementById('countRight').textContent = countSide('right');
       document.getElementById('pageIndicator').textContent =
         `Halaman ${state.currentPage + 1} / ${state.pages.length}`;
       updateStorageStats();
@@ -2244,7 +2184,7 @@ Contoh:
     /* ==========================================================================
        8. TAMBAH GAMBAR + AUTO-COMPRESS
        ========================================================================== */
-    async function insertImageFiles(files, startPage = state.currentPage, startSlot = null) {
+    async function insertImageFiles(files, startPage = state.currentPage, startSlot = null, side = 'right') {
       if (!files || files.length === 0) return;
 
       showToast(`⏳ Memproses ${files.length} gambar...`);
@@ -2270,10 +2210,8 @@ Contoh:
           };
 
           if (sIdx !== null) {
-            while (!state.pages[pIdx]) {
-              state.pages.push([null, null, null, null]);
-            }
-            state.pages[pIdx][sIdx] = cardObj;
+            ensurePage(pIdx);
+            sidePages(side)[pIdx][sIdx] = cardObj;
             sIdx++;
             if (sIdx >= 4) {
               sIdx = 0;
@@ -2282,17 +2220,18 @@ Contoh:
           } else {
             let placed = false;
             for (let p = state.currentPage; p < state.pages.length; p++) {
-              const emptyIdx = state.pages[p].findIndex(slot => !slot);
+              const emptyIdx = sidePages(side)[p].findIndex(slot => !slot);
               if (emptyIdx !== -1) {
-                state.pages[p][emptyIdx] = cardObj;
+                sidePages(side)[p][emptyIdx] = cardObj;
                 pIdx = p;
                 placed = true;
                 break;
               }
             }
             if (!placed) {
-              state.pages.push([cardObj, null, null, null]);
+              ensurePage(state.pages.length);
               pIdx = state.pages.length - 1;
+              sidePages(side)[pIdx][0] = cardObj;
             }
           }
         } catch (err) {
@@ -2330,61 +2269,53 @@ Contoh:
 
       const manifest = {
         app: 'CoquetteTCGBinder',
-        version: 3,
+        version: 4,
         exportedAt: new Date().toISOString(),
         categories: state.categories,
         pages: [],
-        leftPockets: []
+        leftPages: []
       };
 
-      state.pages.forEach((page, pIdx) => {
-        const pageMeta = [];
-        page.forEach((slot, sIdx) => {
-          const blob = slot?.blob || (slot?.dataUrl ? dataUrlToBlob(slot.dataUrl) : null);
-          if (slot && blob) {
-            const ext = getExtFromBlob(blob, slot.dataUrl);
-            const filename = `page${pIdx + 1}-slot${sIdx + 1}.${ext}`;
-            imgFolder.file(filename, blob);
-            const catObj = getCategoryById(slot.categoryId);
+      function exportSide(side, filePrefix, sideLabel) {
+        const out = [];
+        sidePages(side).forEach((page, pIdx) => {
+          const pageMeta = [];
+          page.forEach((slot, sIdx) => {
+            const blob = slot?.blob || (slot?.dataUrl ? dataUrlToBlob(slot.dataUrl) : null);
+            if (slot && blob) {
+              const ext = getExtFromBlob(blob, slot.dataUrl);
+              const filename = `${filePrefix}page${pIdx + 1}-slot${sIdx + 1}.${ext}`;
+              imgFolder.file(filename, blob);
+              const catObj = getCategoryById(slot.categoryId);
 
-            pageMeta.push({
-              id: slot.id,
-              title: slot.title,
-              categoryId: slot.categoryId || '',
-              holo: slot.holo || 'none',
-              notes: slot.notes || '',
-              file: `images/${filename}`
-            });
+              pageMeta.push({
+                id: slot.id,
+                title: slot.title,
+                categoryId: slot.categoryId || '',
+                holo: slot.holo || 'none',
+                notes: slot.notes || '',
+                file: `images/${filename}`
+              });
 
-            combinedMarkdown += `## Halaman ${pIdx + 1} • Slot ${sIdx + 1}: ${slot.title || 'TCG Artwork'}\n`;
-            if (catObj) combinedMarkdown += `- **Kategori**: ${catObj.name}\n`;
-            combinedMarkdown += `- **Efek Sleeve**: \`${slot.holo || 'none'}\`\n`;
-            combinedMarkdown += `- **File Gambar**: \`images/${filename}\`\n\n`;
-            if (slot.notes && slot.notes.trim()) {
-              combinedMarkdown += `${slot.notes.trim()}\n\n`;
+              combinedMarkdown += `## ${sideLabel} • Halaman ${pIdx + 1} • Slot ${sIdx + 1}: ${slot.title || 'TCG Artwork'}\n`;
+              if (catObj) combinedMarkdown += `- **Kategori**: ${catObj.name}\n`;
+              combinedMarkdown += `- **Efek Sleeve**: \`${slot.holo || 'none'}\`\n`;
+              combinedMarkdown += `- **File Gambar**: \`images/${filename}\`\n\n`;
+              if (slot.notes && slot.notes.trim()) {
+                combinedMarkdown += `${slot.notes.trim()}\n\n`;
+              }
+              combinedMarkdown += `---\n\n`;
+            } else {
+              pageMeta.push(null);
             }
-            combinedMarkdown += `---\n\n`;
-          } else {
-            pageMeta.push(null);
-          }
-        });
-        manifest.pages.push(pageMeta);
-      });
-
-      state.leftPockets.forEach((lp, idx) => {
-        const blob = lp?.blob || (lp?.dataUrl ? dataUrlToBlob(lp.dataUrl) : null);
-        if (lp && blob) {
-          const ext = getExtFromBlob(blob, lp.dataUrl);
-          const filename = `left-pocket-${idx + 1}.${ext}`;
-          imgFolder.file(filename, blob);
-          manifest.leftPockets.push({
-            label: lp.label,
-            file: `images/${filename}`
           });
-        } else {
-          manifest.leftPockets.push({ label: lp.label, file: null });
-        }
-      });
+          out.push(pageMeta);
+        });
+        return out;
+      }
+
+      manifest.pages = exportSide('right', '', 'My Artwork');
+      manifest.leftPages = exportSide('left', 'left-', 'Commission / Other Artist');
 
       zip.file('binder-backup.json', JSON.stringify(manifest, null, 2));
       zip.file('catatan-artwork.md', combinedMarkdown);
@@ -2426,54 +2357,73 @@ Contoh:
             });
           }
 
-          const restoredPages = [];
-          for (const pageMeta of manifest.pages) {
-            const row = [];
-            for (const slotMeta of pageMeta) {
-              if (slotMeta && slotMeta.file && zip.file(slotMeta.file)) {
-                const imgBlob = await zip.file(slotMeta.file).async('blob');
-                row.push({
-                  id: slotMeta.id || ('card_' + Math.random().toString(36).slice(2, 8)),
-                  title: slotMeta.title || 'TCG Card',
-                  categoryId: slotMeta.categoryId || '',
-                  holo: slotMeta.holo || 'none',
-                  notes: slotMeta.notes || '',
-                  blob: imgBlob
-                });
-              } else {
-                row.push(null);
+          async function readSide(pagesMeta) {
+            const rows = [];
+            for (const pageMeta of (pagesMeta || [])) {
+              const row = [];
+              for (const slotMeta of pageMeta) {
+                if (slotMeta && slotMeta.file && zip.file(slotMeta.file)) {
+                  const imgBlob = await zip.file(slotMeta.file).async('blob');
+                  row.push({
+                    id: slotMeta.id || ('card_' + Math.random().toString(36).slice(2, 8)),
+                    title: slotMeta.title || 'TCG Card',
+                    categoryId: slotMeta.categoryId || '',
+                    holo: slotMeta.holo || 'none',
+                    notes: slotMeta.notes || '',
+                    blob: imgBlob
+                  });
+                } else {
+                  row.push(null);
+                }
+              }
+              rows.push(row);
+            }
+            return rows;
+          }
+
+          const restoredRight = await readSide(manifest.pages);
+          let restoredLeft = await readSide(manifest.leftPages);
+
+          // Backup versi lama: "saku favorit" dipindah ke halaman kiri
+          if (!manifest.leftPages && Array.isArray(manifest.leftPockets)) {
+            const row = emptyRow();
+            let any = false;
+            for (let i = 0; i < Math.min(4, manifest.leftPockets.length); i++) {
+              const lp = manifest.leftPockets[i];
+              if (lp && lp.file && zip.file(lp.file)) {
+                row[i] = {
+                  id: 'card_' + Math.random().toString(36).slice(2, 8),
+                  title: lp.label || 'Commission',
+                  categoryId: '', holo: 'none', notes: '',
+                  blob: await zip.file(lp.file).async('blob')
+                };
+                any = true;
               }
             }
-            restoredPages.push(row);
+            if (any) restoredLeft = [row];
           }
+
+          const total = Math.max(restoredRight.length, restoredLeft.length);
+          while (restoredRight.length < total) restoredRight.push(emptyRow());
+          while (restoredLeft.length < total) restoredLeft.push(emptyRow());
 
           if (replaceAll) {
             if (Array.isArray(manifest.categories) && manifest.categories.length > 0) {
               state.categories = manifest.categories;
             }
-            state.pages = restoredPages.length ? restoredPages : [[null, null, null, null]];
+            state.pages = total ? restoredRight : [emptyRow()];
+            state.leftPages = total ? restoredLeft : [emptyRow()];
             state.currentPage = 0;
-
-            if (Array.isArray(manifest.leftPockets)) {
-              for (let i = 0; i < 3; i++) {
-                const lp = manifest.leftPockets[i];
-                if (lp && lp.file && zip.file(lp.file)) {
-                  const b = await zip.file(lp.file).async('blob');
-                  state.leftPockets[i] = { label: lp.label, blob: b };
-                } else if (lp) {
-                  state.leftPockets[i] = { label: lp.label || DEFAULT_LEFT_POCKETS[i].label, blob: null };
-                }
-              }
-            }
           } else {
-            state.pages.push(...restoredPages);
-            state.currentPage = state.pages.length - restoredPages.length;
+            const startIdx = state.pages.length;
+            state.pages.push(...restoredRight);
+            state.leftPages.push(...restoredLeft);
+            state.currentPage = Math.min(startIdx, state.pages.length - 1);
           }
 
           saveStateToDB();
-          renderLeftPockets();
           renderCurrentPage(true);
-          showToast(`🎀 Backup ZIP berhasil di-restore (${restoredPages.length} halaman)!`);
+          showToast(`🎀 Backup ZIP berhasil di-restore (${total} halaman)!`);
           return;
         }
 
@@ -2498,7 +2448,7 @@ Contoh:
           fileObjects.push(new File([blob], cleanName, { type: blob.type || 'image/png' }));
         }
 
-        await insertImageFiles(fileObjects, state.currentPage, null);
+        await insertImageFiles(fileObjects, state.currentPage, null, 'right');
       } catch (err) {
         console.error(err);
         showToast('❌ Gagal membaca file ZIP. Pastikan arsip tidak rusak.');
@@ -2602,7 +2552,7 @@ Contoh:
 
       if (confirm(`Hapus kategori "${cat.name}" dari daftar pilihan?`)) {
         state.categories = state.categories.filter(c => c.id !== targetId);
-        state.pages.forEach(page => {
+        [...state.pages, ...state.leftPages].forEach(page => {
           page.forEach(slot => {
             if (slot && slot.categoryId === targetId) slot.categoryId = '';
           });
@@ -2633,16 +2583,20 @@ Contoh:
 
     notesTextarea.addEventListener('input', syncMarkdownPreview);
 
+    function setMdMode(mode) {
+      document.querySelectorAll('.md-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+      const ws = document.getElementById('mdWorkspace');
+      ws.classList.remove('mode-edit', 'mode-preview');
+      ws.classList.add(`mode-${mode}`);
+      document.getElementById('mdStudioBar').classList.toggle('is-preview', mode === 'preview');
+      syncMarkdownPreview();
+      if (mode === 'edit') notesTextarea.focus({ preventScroll: true });
+    }
+
     document.getElementById('mdViewTabs').addEventListener('click', (e) => {
       const btn = e.target.closest('.md-tab-btn');
       if (!btn) return;
-      document.querySelectorAll('.md-tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const ws = document.getElementById('mdWorkspace');
-      ws.classList.remove('mode-split', 'mode-edit', 'mode-preview');
-      ws.classList.add(`mode-${btn.dataset.mode}`);
-      syncMarkdownPreview();
+      setMdMode(btn.dataset.mode);
     });
 
     document.querySelectorAll('.md-fmt-btn').forEach(btn => {
@@ -2670,21 +2624,14 @@ Contoh:
       });
     });
 
-    const toggleFullscreenBtn = document.getElementById('toggleFullscreenNotesBtn');
     const cardModalDialog = document.getElementById('cardModalDialog');
-    toggleFullscreenBtn.addEventListener('click', () => {
-      const isFull = cardModalDialog.classList.toggle('fullscreen-notes');
-      toggleFullscreenBtn.textContent = isFull ? '🗗 Keluar Layar Penuh' : '⛶ Layar Penuh';
-      syncMarkdownPreview();
-    });
 
-    function openCardInspectModal(slotIndex) {
+    function openCardInspectModal(side, slotIndex) {
+      inspectingSide = side;
       inspectingSlotIndex = slotIndex;
-      const item = state.pages[state.currentPage][slotIndex];
+      const item = sidePages(side)[state.currentPage][slotIndex];
       if (!item) return;
 
-      cardModalDialog.classList.remove('fullscreen-notes');
-      toggleFullscreenBtn.textContent = '⛶ Layar Penuh';
       document.getElementById('newCategoryBox').classList.remove('open');
 
       document.getElementById('inspectImg').src = getImageSrc(item);
@@ -2697,7 +2644,9 @@ Contoh:
       updateInspectHoloPreview(normalizedHolo);
 
       document.getElementById('cardModal').classList.add('open');
-      syncMarkdownPreview();
+      setMdMode('preview');
+      const body = document.querySelector('#cardModal .inspector-grid');
+      if (body) body.scrollTop = 0;
     }
 
     function updateInspectHoloPreview(holoType) {
@@ -2732,6 +2681,56 @@ Contoh:
       inspectFrame.style.setProperty('--my', '50%');
     });
 
+
+    /* ==========================================================================
+       11b. BUKA ARTWORK DI JENDELA BARU
+       ========================================================================== */
+    (function setupArtworkWindow() {
+      function openInNewWindow() {
+        const item = sidePages(inspectingSide)[state.currentPage][inspectingSlotIndex];
+        if (!item) return;
+        const src = getImageSrc(item);
+        if (!src) return;
+        const title = (document.getElementById('cardTitleInput').value || item.title || 'Artwork')
+          .replace(/[<>&"]/g, '');
+        const w = window.open('', '_blank');
+        if (!w) { showToast('⚠️ Pop-up diblokir browser. Izinkan pop-up untuk situs ini.'); return; }
+        w.document.open();
+        w.document.write(`<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=10, user-scalable=yes">
+<title>${title}</title>
+<style>
+  html,body{margin:0;background:#1d0f15;min-height:100%;font-family:system-ui,sans-serif}
+  .bar{position:fixed;top:0;left:0;right:0;z-index:2;display:flex;gap:8px;align-items:center;justify-content:space-between;
+    padding:8px 12px;background:rgba(29,15,21,.82);backdrop-filter:blur(6px);color:#fff;font-size:13px}
+  .bar b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .bar span{display:flex;gap:6px;flex-shrink:0}
+  .bar a,.bar button{background:#fff;color:#6c4350;border:0;border-radius:999px;padding:6px 12px;font-weight:700;font-size:12px;text-decoration:none;cursor:pointer}
+  .wrap{padding-top:46px;min-height:100vh;display:grid;place-items:center}
+  img{-webkit-touch-callout:none;-webkit-user-drag:none;user-select:none;display:block;max-width:100%;max-height:calc(100vh - 46px);object-fit:contain;cursor:zoom-in}
+  body.full img{max-width:none;max-height:none;cursor:zoom-out}
+  body.full .wrap{display:block;overflow:auto}
+</style></head><body>
+<div class="bar"><b>${title}</b><span>
+  <button id="t">Ukuran asli</button>
+  <button id="x" aria-label="Tutup">✕ Tutup</button></span></div>
+<div class="wrap"><img id="i" src="${src}" alt="${title}" draggable="false"></div>
+<script>
+  var b=document.body,t=document.getElementById('t');
+  function tog(){b.classList.toggle('full');t.textContent=b.classList.contains('full')?'Muat layar':'Ukuran asli';}
+  t.onclick=tog;document.getElementById('i').onclick=tog;
+  function closeMe(){window.close();setTimeout(function(){if(!window.closed){if(history.length>1)history.back();else location.replace('about:blank');}},150);}
+  document.getElementById('x').onclick=closeMe;
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMe();});
+  document.addEventListener('contextmenu',function(e){e.preventDefault();});
+<\/script></body></html>`);
+        w.document.close();
+      }
+
+      document.getElementById('inspectFrame').addEventListener('click', openInNewWindow);
+      document.getElementById('openWindowBtn').addEventListener('click', openInNewWindow);
+    })();
+
     /* ==========================================================================
        12. EVENT LISTENERS & INISIALISASI
        ========================================================================== */
@@ -2744,36 +2743,25 @@ Contoh:
       toastTimer = setTimeout(() => el.classList.remove('show'), 3400);
     }
 
-    document.getElementById('addImagesBtn').addEventListener('click', () => {
-      document.getElementById('multiImageInput').click();
+    document.querySelectorAll('.add-side-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        multiTargetSide = btn.dataset.side;
+        document.getElementById('multiImageInput').click();
+      });
     });
 
     document.getElementById('multiImageInput').addEventListener('change', async (e) => {
       const files = Array.from(e.target.files);
-      await insertImageFiles(files, state.currentPage, null);
+      await insertImageFiles(files, state.currentPage, null, multiTargetSide);
       e.target.value = '';
     });
 
     document.getElementById('singleSlotInput').addEventListener('change', async (e) => {
       const files = Array.from(e.target.files);
       if (files.length > 0 && targetSlotIndex !== null) {
-        await insertImageFiles(files, state.currentPage, targetSlotIndex);
+        await insertImageFiles(files, state.currentPage, targetSlotIndex, targetSide);
       }
       targetSlotIndex = null;
-      e.target.value = '';
-    });
-
-    document.getElementById('leftPocketInput').addEventListener('change', async (e) => {
-      const file = e.target.files[0];
-      if (file && targetLeftPocketIndex !== null) {
-        const { blob } = await compressImageBlob(file);
-        state.leftPockets[targetLeftPocketIndex].blob = blob;
-        state.leftPockets[targetLeftPocketIndex].label = file.name.replace(/\.[^/.]+$/, '').slice(0, 18);
-        saveStateToDB();
-        renderLeftPockets();
-        showToast('🎀 Kartu saku favorit diperbarui!');
-      }
-      targetLeftPocketIndex = null;
       e.target.value = '';
     });
 
@@ -2791,7 +2779,8 @@ Contoh:
 
     document.getElementById('clearBinderBtn').addEventListener('click', () => {
       if (confirm('Kosongkan semua halaman kartu di binder? (Pastikan sudah Export ZIP jika ingin menyimpan backup)')) {
-        state.pages = [[null, null, null, null]];
+        state.pages = [emptyRow()];
+        state.leftPages = [emptyRow()];
         state.currentPage = 0;
         saveStateToDB();
         renderCurrentPage(true);
@@ -2861,7 +2850,7 @@ Contoh:
     });
 
     document.getElementById('addPageBtn').addEventListener('click', () => {
-      state.pages.push([null, null, null, null]);
+      ensurePage(state.pages.length);
       state.currentPage = state.pages.length - 1;
       saveStateToDB();
       renderCurrentPage(true);
@@ -2889,7 +2878,7 @@ Contoh:
 
     document.getElementById('saveCardMetaBtn').addEventListener('click', () => {
       if (inspectingSlotIndex === null) return;
-      const item = state.pages[state.currentPage][inspectingSlotIndex];
+      const item = sidePages(inspectingSide)[state.currentPage][inspectingSlotIndex];
       if (item) {
         item.title = document.getElementById('cardTitleInput').value.trim() || 'TCG Artwork';
         item.categoryId = document.getElementById('cardCategorySelect').value || '';
@@ -2904,7 +2893,7 @@ Contoh:
 
     document.getElementById('deleteCardBtn').addEventListener('click', () => {
       if (inspectingSlotIndex === null) return;
-      state.pages[state.currentPage][inspectingSlotIndex] = null;
+      sidePages(inspectingSide)[state.currentPage][inspectingSlotIndex] = null;
       saveStateToDB();
       renderCurrentPage();
       document.getElementById('cardModal').classList.remove('open');
@@ -2913,6 +2902,7 @@ Contoh:
 
     document.getElementById('replaceCardImgBtn').addEventListener('click', () => {
       targetSlotIndex = inspectingSlotIndex;
+      targetSide = inspectingSide;
       document.getElementById('cardModal').classList.remove('open');
       document.getElementById('singleSlotInput').click();
     });
@@ -2931,7 +2921,7 @@ Contoh:
         saveStateToDB();
       }
       document.getElementById('autoCompressToggle').checked = state.settings.autoCompress;
-      renderLeftPockets();
+      normalizeState();
       renderCurrentPage();
     })();
   </script>
